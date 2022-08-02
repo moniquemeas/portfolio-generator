@@ -1,12 +1,7 @@
+const fs = require('fs');
 const inquirer = require('inquirer');
-//const fs = require("fs");
-//const generatePage = require('./src/page-template');
-//const pageHTML = generatePage(nam, github);
-//fs.writeFile('./index.htm', pageHJTML, err => {
-   // if (err) throw err;
+const generatePage = require('./src/page-template');
 
-   // console.log('Portfolio Completed! Check out index.html to see the output!');
-//});
 
 const promptUser = () => {
 
@@ -20,7 +15,7 @@ return inquirer.prompt([
             return true;
         } else {
             console.log('Please enter your name!');
-            return false;
+            return false
         }
     }
 },
@@ -154,7 +149,15 @@ const promptProject = portfolioData  => {
 promptUser()
 .then(promptProject)
 .then(portfolioData => {
-    console.log(portfolioData);
+    const pageHTML = generatePage(portfolioData);
+   
+
+    fs.writeFile('./index.html', pageHTML, err => {
+     if (err) throw new Error(err);
+
+     console.log('Page created! Check out index.html in this directory to see it!');
+    });
+   
 });
 
   
